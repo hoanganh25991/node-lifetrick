@@ -3,5 +3,8 @@
     "chromeless": "^1.2.0",
     "firebase-admin": "^5.2.1",
     "puppeteer": "^0.10.1"
+  },
+  "devDependencies": {
+    "pipe-to-browser": "^1.0.4"
   }
 }
