@@ -1,19 +1,17 @@
 const findPageLink = require("./src/findPageLink")
 const findPost = require("./src/findPost")
 const firebaseNodeLifeTrick = require("./src/updateToFirebase")
+const infoAwait = require("./src/infoAwait")
 
 const run = async function(){
   const homepage = "http://lifetricks.com";
-  let pageLink = await findPageLink(homepage)
-  pageLink = {
-    restUrl: ["http://lifetricks.com/page/", "/"],
-    startNumPage: 2,
-    lastNumPage: 3,
-  }
-  console.log("Override for test", pageLink)
+  // Info we are finding page link
+  const pageLink = await infoAwait(findPageLink, homepage, `[INFO] Finding page link...`)
+  
   for(let i = pageLink.startNumPage; i <= pageLink.lastNumPage; i++){
     const url = `${pageLink.restUrl[0]}${i}${pageLink.restUrl[1]}`;
-    const posts = await findPost(url)
+    const posts = await infoAwait(findPost, url, `[INFO] Crawling at: ${url}`)
+    console.log(`[INFO] See ${posts.length} posts`)
     await firebaseNodeLifeTrick(posts)
   }
 }

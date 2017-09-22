@@ -34,7 +34,7 @@ const updateSinglePostWithCategory = async(postWithCategory) => {
   })
 
   const categoryKey = sameCategory ? Object.keys(sameCategory)[0] : refToCategories.push().key;
-  console.log("categoryKey", categoryKey)
+  console.log(`[INFO] Updating categoryKey: ${categoryKey}`)
   await db.ref(`nodeLifeTrick/categories/${categoryKey}`).set({name: categoryName})
 
   const refToPosts = db.ref("nodeLifeTrick/posts")
@@ -48,7 +48,7 @@ const updateSinglePostWithCategory = async(postWithCategory) => {
       })
   })
   const postKey = samePost ? Object.keys(samePost)[0] : refToPosts.push().key;
-  console.log("postKey", postKey)
+  console.log(`[INFO] Updating postKey: ${postKey}`)
   await db.ref(`nodeLifeTrick/posts/${postKey}`).set({postId, imgUrl, categoryId: categoryKey})
 }
 
