@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer');
+const {puppeteer : config} = require("./config")
 
 const parseLinkList = (link) => {
   const pattern = /\/page\/\d+/gi;
@@ -14,10 +15,10 @@ const parseLinkList = (link) => {
 }
 
 const findPageLink = async (homepage) => {
-  const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
+  const browser = await puppeteer.launch(config.launch);
   const page = await browser.newPage();
   await page.goto(homepage);
-  await page.waitForSelector('img')
+  await page.waitForSelector('img', config.waitForSelector)
   const linkList = await page.evaluate(() => {
     const nodeList = document.querySelectorAll('div.navPageNumbers a');
     // Turn nodeList into array

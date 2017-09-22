@@ -1,10 +1,11 @@
 const puppeteer = require('puppeteer');
+const {puppeteer : config} = require("./config")
 
 const findPost = async (url) => {
-  const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
+  const browser = await puppeteer.launch(config.launch);
   const page = await browser.newPage();
   await page.goto(url);
-  await page.waitForSelector('img')
+  await page.waitForSelector('img', config.waitForSelector)
   const posts = await page.evaluate(() => {
     const nodeList = document.querySelectorAll('div.reddit-post-wrapper');
     const _wrappers = []
