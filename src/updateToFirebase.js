@@ -10,4 +10,16 @@ admin.initializeApp({
 const db = admin.database();
 const firebaseNodeLifeTrick = db.ref("nodeLifeTrick");
 
-var exports = module.exports = firebaseNodeLifeTrick
+(async() => {
+  let categoryName = "hoanganhxxx";
+  await db.ref("nodeLifeTrick/categories").push({name: categoryName})
+  const category = await new Promise(resolve => {
+    db.ref("nodeLifeTrick/categories").orderByChild("name").equalTo(categoryName).once("value",function(snapshot){
+      resolve(snapshot.val())
+    })
+  })
+  console.log(category)
+  process.exit()
+})();
+
+// var exports = module.exports = firebaseNodeLifeTrick
