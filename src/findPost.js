@@ -34,7 +34,7 @@ const findPost = async (url) => {
 
     return posts;
   });
-  
+  await browser.close()
   return posts;
 }
 

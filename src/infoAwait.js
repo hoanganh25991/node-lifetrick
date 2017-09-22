@@ -1,8 +1,12 @@
-const infoAwait = async (callback, args, taskName = "[INFO] No task name") => {
-  console.log(taskName)
-  const timeId = setTimeout(() => console.log(`[INFO] ...`), 500)
+const logWithInfo = require("./logWithInfo")
+
+const infoAwait = async (callback, args, taskName = "No task name") => {
+  console.time(taskName);
+  logWithInfo(taskName)
+  const timeId = setInterval(() => logWithInfo(`...`), 2000)
   const result = await callback(args)
-  clearTimeout(timeId)
+  clearInterval(timeId)
+  console.timeEnd(taskName);
   return result
 }
 
