@@ -6,5 +6,8 @@
   },
   "devDependencies": {
     "pipe-to-browser": "^1.0.4"
+  },
+  "scripts": {
+    "start": "node index.js 2>&1 | pipe-to-browser"
   }
 }
