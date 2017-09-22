@@ -1,20 +1,8 @@
-let timeId;
-const loading = {
-  start(){
-    timeId = setTimeout(() => console.log(`[INFO] ...`), 1000)
-  },
-  end(){
-    if(timeId){
-      clearTimeout(timeId)
-    }
-  }
-}
-
-const infoAwait = async (callback, args, taskName) => {
+const infoAwait = async (callback, args, taskName = "[INFO] No task name") => {
   console.log(taskName)
-  loading.start()
+  const timeId = setTimeout(() => console.log(`[INFO] ...`), 500)
   const result = await callback(args)
-  loading.end()
+  clearTimeout(timeId)
   return result
 }
 
