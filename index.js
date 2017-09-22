@@ -33,14 +33,16 @@ const url = "http://lifetricks.com/page/1/";
       const posts = wrappers.map(wrapper => {
         try {
           // Try to find imgUrl
+          const postId = wrapper.getAttribute("data-post-id")
+
           const post = wrapper.querySelector('div.reddit-post')
           const img = post.querySelector('img');
           // Try to get the category
-          const postFooter = wrapper.querySelector('div.reddit-post-footer')
-          const anchorCategory = postFooter.querySelector('a.category-tag')
+          const anchorCategory = post.querySelector('div.reddit-post-footer a.category-tag')
           const category = anchorCategory.innerText
 
           return {
+            postId,
             imgUrl: img.src,
             category,
           }
