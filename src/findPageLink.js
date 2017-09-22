@@ -8,7 +8,7 @@ const parseLinkList = (link) => {
   restUrl[0] = restUrl[0] + "/page/"
   const numPageMatch = pageX.match(/\d+/gi)
   return {
-    numPage: numPageMatch[0],
+    numPage: Number(numPageMatch[0]),
     restUrl
   };
 }
