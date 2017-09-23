@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title></title>
+  <title>Read firebase data</title>
   <style type="text/css">
     pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; }
     .string { color: green; }
@@ -12,13 +12,12 @@
   </style>
 </head>
 <body>
-<ul id="myList"></ul>
+<h3>Read first 10 categories, posts</h3>
 <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase-database.js"></script>
 <script src="summaryFirebase.js"></script>
 <script>
 // Initialize Firebase
-// TODO: Replace with your project's customized code snippet
 const defaultAppConfig = {
   apiKey: "AIzaSyDXbD71Y_uA8ldm1h9S2-6AOgl73UOid1U",
   authDomain: "glass-turbine-148103.firebaseapp.com",
@@ -26,17 +25,29 @@ const defaultAppConfig = {
 };
 showOnBody(defaultAppConfig)
 // Initialize the default app
-const defaultApp = firebase.initializeApp(defaultAppConfig);
-console.log(defaultApp.name);
+firebase.initializeApp(defaultAppConfig);
 const defaultDatabase = firebase.database();
+
+// Read categories
 const refCategories = defaultDatabase.ref("nodeLifeTrick/categories");
-const waitFor = new Promise(resolve => {
+const waitForCategories = new Promise(resolve => {
   refCategories.orderByChild("name").limitToFirst(10).once("value", (snapshot) => {
     resolve(snapshot.val())
   })
 })
-waitFor.then(cateory => {
+waitForCategories.then(cateory => {
     showOnBody(cateory)
+})
+
+// Read posts
+const refPosts = defaultDatabase.ref("nodeLifeTrick/posts");
+const waitForPost = new Promise(resolve => {
+  refPosts.orderByChild("postId").limitToFirst(10).once("value", (snapshot) => {
+    resolve(snapshot.val())
+  })
+})
+waitForPost.then(posts => {
+    showOnBody(posts)
 })
 </script>
 </body>
