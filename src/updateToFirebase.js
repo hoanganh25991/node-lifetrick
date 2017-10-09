@@ -55,12 +55,14 @@ const updateSinglePostWithCategory = async(postWithCategory) => {
       })
   })
   const postKey = samePost ? Object.keys(samePost)[0] : refToPosts.push().key;
-  console.log(`[INFO] Updating postKey: ${postKey}`)
 
+  console.log(`[INFO] Saving to cloud storage postImg`)
   const {fileName, cleanFile} = await cropImage(imgUrl)
   const myImgUrl = await saveToCloudStorage(bucketName, fileName)
+  console.log(`[INFO] Storage url: ${myImgUrl}`)
   cleanFile()
 
+  console.log(`[INFO] Updating postKey: ${postKey}`)
   await db.ref(`nodeLifeTrick2/posts/${postKey}`).update({postId, imgUrl: myImgUrl, categoryId: categoryKey})
 }
 

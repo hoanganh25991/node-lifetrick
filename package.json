@@ -4,7 +4,8 @@
     "chromeless": "^1.2.0",
     "firebase-admin": "^5.2.1",
     "jimp": "^0.2.28",
-    "puppeteer": "^0.10.1"
+    "puppeteer": "^0.10.1",
+    "single-line-log": "^1.1.2"
   },
   "devDependencies": {
     "pipe-to-browser": "^1.0.4"

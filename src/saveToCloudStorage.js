@@ -18,18 +18,18 @@ const makePublic = storage => (bucketName, filename) => {
   )
 }
 
-const uploadFile = storage => (bucketName, filename) => {
+const uploadFile = storage => (bucketName, fileName) => {
+  const filePath = `${__dirname}/${fileName}`
   return (
     storage
     .bucket(bucketName)
-    .upload(filename)
+    .upload(filePath, {destination: `nodeLifeTrick/${fileName}`})
   )
 }
 
 const saveToCloudStorage = async (bucketName, fileName) => {
-  const filePath = `${__dirname}/${fileName}`
-  await uploadFile(storage)(bucketName, filePath)
-  await makePublic(storage)(bucketName, fileName)
+  await uploadFile(storage)(bucketName, fileName)
+  // await makePublic(storage)(bucketName, fileName)
   const publicUrl = getPublicUrl(bucketName, fileName)
   return publicUrl
 }
