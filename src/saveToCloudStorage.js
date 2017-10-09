@@ -1,4 +1,3 @@
-const bucketName = "glass-turbine-148103.appspot.com"
 const serviceAccountPath = `${__dirname}/.credential/test-google-api-bfba3eec6bad.json`
 const Storage = require('@google-cloud/storage');
 const storage = Storage({
@@ -37,6 +36,7 @@ const saveToCloudStorage = async (bucketName, fileName) => {
 
 
 // (async () => {
+//   const bucketName = "glass-turbine-148103.appspot.com"
 //   // const fileName = "logWithInfo.js"
 //   // const filePath = `${__dirname}/${fileName}`
 //   // await uploadFile(storage)(bucketName, filePath)

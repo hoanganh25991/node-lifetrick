@@ -17,6 +17,7 @@ const cropImage = async imgUrl => {
   await new Promise(resolve => img.write(`${__dirname}/${fileName}`, resolve))
   return {
     filePath,
+    fileName,
     cleanFile: () => fs.unlinkSync(filePath)
   }
 }

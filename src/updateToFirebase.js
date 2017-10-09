@@ -1,13 +1,20 @@
 const admin = require("firebase-admin");
 // Fetch the service account key JSON file contents
 const serviceAccount = require("./.credential/glass-turbine-148103-firebase-adminsdk-n0gsz-f4c7be2350.json");
+
 // Initialize the app with a service account, granting admin privileges
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://glass-turbine-148103.firebaseio.com/"
 });
+
 // As an admin, the app has access to read and write all data, regardless of Security Rules
 const db = admin.database();
+
+const cropImage = require("./cropImage")
+const saveToCloudStorage = require("./saveToCloudStorage")
+const bucketName = "glass-turbine-148103.appspot.com"
+
 /**
  * Update to nodeLifeTrick2 post & category
  * Base on post content after crawling
@@ -50,9 +57,11 @@ const updateSinglePostWithCategory = async(postWithCategory) => {
   const postKey = samePost ? Object.keys(samePost)[0] : refToPosts.push().key;
   console.log(`[INFO] Updating postKey: ${postKey}`)
 
-  const myImgUrl = "";
+  const {fileName, cleanFile} = await cropImage(imgUrl)
+  const myImgUrl = await saveToCloudStorage(bucketName, fileName)
+  cleanFile()
 
-  await db.ref(`nodeLifeTrick2/posts/${postKey}`).update({postId, imgUrl, categoryId: categoryKey})
+  await db.ref(`nodeLifeTrick2/posts/${postKey}`).update({postId, imgUrl: myImgUrl, categoryId: categoryKey})
 }
 
 const updateManyPostWithCategorys = async (postWitchCategorys) => {
