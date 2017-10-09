@@ -35,7 +35,7 @@ const updateSinglePostWithCategory = async(postWithCategory) => {
 
   const categoryKey = sameCategory ? Object.keys(sameCategory)[0] : refToCategories.push().key;
   console.log(`[INFO] Updating categoryKey: ${categoryKey}`)
-  await db.ref(`nodeLifeTrick2/categories/${categoryKey}`).set({name: categoryName})
+  await db.ref(`nodeLifeTrick2/categories/${categoryKey}`).update({name: categoryName})
 
   const refToPosts = db.ref("nodeLifeTrick2/posts")
   const samePost = await new Promise(resolve => {
@@ -49,7 +49,10 @@ const updateSinglePostWithCategory = async(postWithCategory) => {
   })
   const postKey = samePost ? Object.keys(samePost)[0] : refToPosts.push().key;
   console.log(`[INFO] Updating postKey: ${postKey}`)
-  await db.ref(`nodeLifeTrick2/posts/${postKey}`).set({postId, imgUrl, categoryId: categoryKey})
+
+  const myImgUrl = "";
+
+  await db.ref(`nodeLifeTrick2/posts/${postKey}`).update({postId, imgUrl, categoryId: categoryKey})
 }
 
 const updateManyPostWithCategorys = async (postWitchCategorys) => {
