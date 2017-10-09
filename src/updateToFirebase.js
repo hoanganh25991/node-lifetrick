@@ -9,7 +9,7 @@ admin.initializeApp({
 // As an admin, the app has access to read and write all data, regardless of Security Rules
 const db = admin.database();
 /**
- * Update to nodeLifeTrick post & category
+ * Update to nodeLifeTrick2 post & category
  * Base on post content after crawling
  *
  * @param {Object} postWithCategory
@@ -22,7 +22,7 @@ const db = admin.database();
 const updateSinglePostWithCategory = async(postWithCategory) => {
   // Find if post exist
   const {postId, imgUrl, category:categoryName} = postWithCategory
-  const refToCategories = db.ref("nodeLifeTrick/categories")
+  const refToCategories = db.ref("nodeLifeTrick2/categories")
   const sameCategory = await new Promise(resolve => {
     refToCategories
       .orderByChild("name")
@@ -35,9 +35,9 @@ const updateSinglePostWithCategory = async(postWithCategory) => {
 
   const categoryKey = sameCategory ? Object.keys(sameCategory)[0] : refToCategories.push().key;
   console.log(`[INFO] Updating categoryKey: ${categoryKey}`)
-  await db.ref(`nodeLifeTrick/categories/${categoryKey}`).set({name: categoryName})
+  await db.ref(`nodeLifeTrick2/categories/${categoryKey}`).set({name: categoryName})
 
-  const refToPosts = db.ref("nodeLifeTrick/posts")
+  const refToPosts = db.ref("nodeLifeTrick2/posts")
   const samePost = await new Promise(resolve => {
     refToPosts
       .orderByChild("postId")
@@ -49,11 +49,14 @@ const updateSinglePostWithCategory = async(postWithCategory) => {
   })
   const postKey = samePost ? Object.keys(samePost)[0] : refToPosts.push().key;
   console.log(`[INFO] Updating postKey: ${postKey}`)
-  await db.ref(`nodeLifeTrick/posts/${postKey}`).set({postId, imgUrl, categoryId: categoryKey})
+  await db.ref(`nodeLifeTrick2/posts/${postKey}`).set({postId, imgUrl, categoryId: categoryKey})
 }
 
 const updateManyPostWithCategorys = async (postWitchCategorys) => {
-  await postWitchCategorys.map(postWithCategory => updateSinglePostWithCategory(postWithCategory))
+  await postWitchCategorys.reduce(async (carry, postWithCategory) => {
+    await carry
+    return updateSinglePostWithCategory(postWithCategory)
+  }, "Start updating postWithCategorys")
 }
 
 var exports = module.exports = updateManyPostWithCategorys
