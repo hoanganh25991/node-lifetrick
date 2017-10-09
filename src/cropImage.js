@@ -11,7 +11,7 @@ const cropImage = async imgUrl => {
   const img = await jimpReadImg(imgUrl)
   const fileName = fileNameFromUrl(imgUrl)
   const {width, height: curr} = img.bitmap
-  const height = curr - 300;
+  const height = curr - 50;
   await img.crop(0, 0, width, height)
   const filePath = `${__dirname}/${fileName}`
   await new Promise(resolve => img.write(`${__dirname}/${fileName}`, resolve))
