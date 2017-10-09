@@ -29,7 +29,7 @@ const uploadFile = storage => (bucketName, fileName) => {
 
 const saveToCloudStorage = async (bucketName, fileName) => {
   await uploadFile(storage)(bucketName, fileName)
-  // await makePublic(storage)(bucketName, fileName)
+  await makePublic(storage)(bucketName, fileName)
   const publicUrl = getPublicUrl(bucketName, fileName)
   return publicUrl
 }
